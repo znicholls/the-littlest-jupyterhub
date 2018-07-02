@@ -4,6 +4,8 @@ The Littlest JupyterHub
 .. image:: https://circleci.com/gh/znicholls/the-littlest-jupyterhub.svg?style=shield
    :target: https://circleci.com/gh/znicholls/the-littlest-jupyterhub
 
+At the moment I don't know how to test my setup with automated SSL so the build is failing.
+
 A simple JupyterHub distribution for 1-50 users on a single server.
 
 This project is currently in pre-alpha state & extremely prone to breaking!
