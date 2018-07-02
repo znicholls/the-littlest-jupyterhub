@@ -249,7 +249,7 @@ and finally, to ``/opt/tljh/config.yaml``, add
 AAF Authorisation
 ~~~~~~~~~~~~~~~~~
 
-Need someone clever to write this
+TODO: Find someone clever to write this
 
 Specifying Users
 ----------------
