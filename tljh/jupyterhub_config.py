@@ -32,16 +32,6 @@ c.JupyterHub.ssl_cert = '/etc/letsencrypt/live/course.magicc.org/fullchain.pem'
 # redirect http queries to https
 c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
 
-c.Authenticator.admin_users = {'znicholls'}
-# permitted users
-c.Authenticator.whitelist = {
-    'znicholls',
-    'sfiddes',
-    'mmalte',
-    'malte.meinshausen',
-    'rgieseke',
-}
-
 from oauthenticator.gitlab import LocalGitLabOAuthenticator
 c.JupyterHub.authenticator_class = LocalGitLabOAuthenticator
 # make a user on the system if they don't already exist

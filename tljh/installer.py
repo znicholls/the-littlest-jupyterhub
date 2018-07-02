@@ -2,7 +2,7 @@ import sys
 import os
 import tljh.systemd as systemd
 import tljh.conda as conda
-from tljh import user
+from tljh import user, configurer
 import secrets
 
 INSTALL_PREFIX = os.environ.get('TLJH_INSTALL_PREFIX', '/opt/tljh')
@@ -10,6 +10,7 @@ HUB_ENV_PREFIX = os.path.join(INSTALL_PREFIX, 'hub')
 USER_ENV_PREFIX = os.path.join(INSTALL_PREFIX, 'user')
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+print(configurer.apply_yaml_config(os.path.join(INSTALL_PREFIX, 'config.yaml'), c))
 
 def ensure_jupyterhub_service(prefix):
     """
