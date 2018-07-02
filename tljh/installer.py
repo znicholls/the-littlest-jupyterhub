@@ -72,6 +72,10 @@ ensure_jupyterhub_service(HUB_ENV_PREFIX)
 user.ensure_group('jupyterhub-admins')
 user.ensure_group('jupyterhub-users')
 
+import pdb
+pdb.set_trace()
+# do ssl stuff in here and replace below
+
 with open('/etc/sudoers.d/jupyterhub-admins', 'w') as f:
     # JupyterHub admins should have full passwordless sudo access
     f.write('%jupyterhub-admins ALL = (ALL) NOPASSWD: ALL\n')

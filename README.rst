@@ -53,7 +53,7 @@ You have to be really sure if you want to use JupyterHub without a Secure Socket
 
 If you have a domain name e.g. <my-website.com.au> (more precisely a Fully Qualified Domain Name (FQDN) i.e. a domain name which is associated with an ip address) then you should use "Let's Encrypt". Otherwise you can generate a self-signed certificate.
 
-*A note on FQDNs:* As far as I can tell, all you need to do to get an FQDN is get the ip address of your server, then login to whichever service you've bought the domain name from and tell them to make an 'A record'. An 'A record' associates your ip address with the domain name. For example, if your domains are bought from [strato.de] then you would follow the [instructions here](https://www.strato.de/faq/article/1829/Welche-Einstellungen-kann-ich-im-Konfigurationsdialog-A-Record-vornehmen.html) (yes they're in German, I'm sure there are english versions too if you google 'make A record <your-domain-name-provider>' e.g. https://help.uniteddomains.com/hc/en-us/articles/207237229-Creating-an-A-Record-or-Static-IP-Address, note that in this resource 'Destination' would be replaced by the ip-address of your machine).
+*A note on FQDNs:* As far as I can tell, all you need to do to get an FQDN is get the ip address of your server, then login to whichever service you've bought the domain name from and tell them to make an 'A record'. An 'A record' associates your ip address with the domain name. For example, if your domains are bought from [strato.de] then you would follow the [instructions here](https://www.strato.de/faq/article/1829/Welche-Einstellungen-kann-ich-im-Konfigurationsdialog-A-Record-vornehmen.html) (yes they're in German, I'm sure there are english versions too if you google 'make A record <your-domain-name-provider>' e.g. `United Domains Help <https://help.uniteddomains.com/hc/en-us/articles/207237229-Creating-an-A-Record-or-Static-IP-Address note that in this resource>`_ [Note that in this resource, 'Destination', means the ip-address of your machine]).
 
 Let's Encrypt
 ~~~~~~~~~~~~~
@@ -92,21 +92,21 @@ If successful, the output will include a line like
    - Congratulations! Your certificate and chain have been saved at:
      /etc/letsencrypt/live/<your-domain>/fullchain.pem
 
-**Automatic Renewal with Running JupyterHub**
+**Automatic Renewal whilst Running JupyterHub**
 
-Having added an SSL certificate with Certbot, you can then set your machine to automatically check if the certificate is due to expire and renew it if so, all with only a brief drop in access to your server (at 3am which shouldn't be a problem). Firstly, start up an instance of JupyterHub by following the `Quick Start`_ guide.
+Having added an SSL certificate with Certbot, you can then set your machine to automatically check if the certificate is due to expire and renew it if required, all with only a brief drop in access to your server (at 3am which shouldn't be a problem).
 
-Now go to your server's ip address and check that the JupyterHub login page is loaded. This means that your server is now running a working setup of JupyterHub.
+Firstly, start up an instance of JupyterHub by following the `Quick Start`_ guide. Now go to your server's ip-address and check that the JupyterHub login page is loaded. This means that your server is now running a working setup of JupyterHub.
 
-Now run the following command, which checks that the renewal settings we are going to use will work
+Next run the following command, which checks that the renewal settings we are going to use will work
 
 .. code-block::
 
-    certbot renew --dry-run --pre-hook "systemctl stop jupyterhub configurable-http-proxy" --post-hook "systemctl restart jupyterhub"
+    sudo certbot renew --dry-run --pre-hook "systemctl stop jupyterhub configurable-http-proxy" --post-hook "systemctl restart jupyterhub"
 
 If the output includes a line like 'Congratulations, all renewals succeeded' and your JupyterHub server is still accessible via your ip-address then you know that the renewal command is working.
 
-Open ``/etc/cron.d/certbot`` with ``sudo <editor-of-choice> /etc/cron.d/certbot`` e.g. ``sudo nano /etc/cron.d/certbot``. You should see something like (if you want to know what this is, check out `A Quick Intro to Cron <https://www.linode.com/docs/tools-reference/tools/schedule-tasks-with-cron/>`_)
+Open ``/etc/cron.d/certbot`` with ``sudo <editor-of-choice> /etc/cron.d/certbot`` e.g. ``sudo nano /etc/cron.d/certbot``. You should see something like (if haven't used Cron before, check out an `intro to Cron here <https://www.linode.com/docs/tools-reference/tools/schedule-tasks-with-cron/>`_)
 
 .. code-block::
 
