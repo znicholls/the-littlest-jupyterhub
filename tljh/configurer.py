@@ -42,6 +42,7 @@ def apply_yaml_config(path, c):
                 default,
                 yaml.safe_load(f)
             )
+            print(tljh_config)
     else:
         tljh_config = copy.deepcopy(default)
 

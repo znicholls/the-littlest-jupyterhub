@@ -188,7 +188,7 @@ Once in the editor, make the contents of the file
     export GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
     export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
-Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py`` (there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
+Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
 .. code-block:: python
 
@@ -197,6 +197,14 @@ Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config
     # make a user on the system if they don't already exist
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
+
+and finally, to ``/opt/tljh/config.yaml``, add
+
+.. code-block:: yaml
+
+    auth:
+      - type: GitLab # at the moment this could be any string but that's a bug fix for future
+
 
 GitHub
 ~~~~~~
@@ -221,7 +229,7 @@ Once in the editor, make the contents of the file
     export GITHUB_CLIENT_SECRET=<also_copy_from_github>
     export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
-Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py`` (there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
+Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
 .. code-block:: python
 
@@ -231,6 +239,13 @@ Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
 
+and finally, to ``/opt/tljh/config.yaml``, add
+
+.. code-block:: yaml
+
+    auth:
+      type: GitHub # at the moment this could be any string but that's a bug fix for future
+
 AAF Authorisation
 ~~~~~~~~~~~~~~~~~
 
@@ -239,17 +254,17 @@ Need someone clever to write this
 Specifying Users
 ----------------
 
-(there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
-
 As the hub is set up by default, anyone who can authenticate will also be able to create a user profile. Whilst this is simple, it may not exactly be our desired behaviour. Fortunately, the hub provides the ability to control who can access the hub and who cannot as shown.
 
-We can specify users as shown below. ``admin_users`` will have full access to configure the hub whilst the ``whitelist`` specifies the allowed users.
+We can specify users by adding the following text to ``/opt/tljh/config.yaml``. ``admin`` will have full access to configure the hub whilst ``allowed`` users specifies all users who can login.
 
-.. code-block:: python
+.. code-block:: yaml
 
-    c.Authenticator.admin_users = {'<admin_user_1>', '<admin_user_2>'}
-    c.Authenticator.whitelist = {
-        '<allowed_user_1>',
-        '<allowed_user_2>',
-        '<allowed_user_3>',
-    }
+    users:
+      allowed:
+        - <allowed-user-1>
+        - <allowed-user-2>
+        - <allowed-user-3>
+      admin:
+        - <admin-user-1>
+        - <admin-user-2>
