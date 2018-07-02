@@ -25,3 +25,14 @@ at the public IP of your server (on the default http port 80)!
 
 For more information (including other installation methods), check out the
 `documentation <https://the-littlest-jupyterhub.readthedocs.io>`_.
+
+Stopping JupyterHub
+-------------------
+
+The hub can be stopped with
+
+.. code-block:: bash
+
+    sudo systemctl stop JupyterHub
+
+
