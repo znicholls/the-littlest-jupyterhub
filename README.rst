@@ -1,12 +1,8 @@
 The Littlest JupyterHub
 =======================
 
-.. image:: https://circleci.com/gh/yuvipanda/the-littlest-jupyterhub.svg?style=shield
-   :target: https://circleci.com/gh/yuvipanda/the-littlest-jupyterhub
-.. image:: https://media.readthedocs.org/static/projects/badges/passing-flat.svg
-   :target: https://the-littlest-jupyterhub.readthedocs.io
-.. image:: https://badges.gitter.im/jupyterhub/jupyterhub.svg
-   :target: https://gitter.im/jupyterhub/jupyterhub
+.. image:: https://circleci.com/gh/znicholls/the-littlest-jupyterhub.svg?style=shield
+   :target: https://circleci.com/gh/znicholls/the-littlest-jupyterhub
 
 A simple JupyterHub distribution for 1-50 users on a single server.
 
