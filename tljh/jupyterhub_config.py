@@ -5,7 +5,7 @@ import os
 from systemdspawner import SystemdSpawner
 from tljh import user, configurer
 
-INSTALL_PREFIX = os.environ.get('TLJH_INSTALL_PREFIX')
+INSTALL_PREFIX = os.environ.get('TLJH_INSTALL_PREFIX', '/opt/tljh')
 USER_ENV_PREFIX = os.path.join(INSTALL_PREFIX, 'user')
 
 class CustomSpawner(SystemdSpawner):
