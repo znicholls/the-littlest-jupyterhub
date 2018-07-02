@@ -46,8 +46,10 @@ def apply_yaml_config(path, c):
                 default,
                 yaml.safe_load(f)
             )
+        explode
     else:
         tljh_config = copy.deepcopy(default)
+        implode
 
     update_auth(c, tljh_config)
     update_userlists(c, tljh_config)
