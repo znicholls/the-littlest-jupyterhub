@@ -3,7 +3,7 @@ set -exuo pipefail
 
 # Set up defaults for configurable env vars
 TLJH_INSTALL_PREFIX=${TLJH_INSTALL_PREFIX:-/opt/tljh}
-TLJH_INSTALL_PIP_SPEC=${TLJH_INSTALL_PIP_SPEC:-git+https://github.com/yuvipanda/the-littlest-jupyterhub.git}
+TLJH_INSTALL_PIP_SPEC=${TLJH_INSTALL_PIP_SPEC:-git+https://github.com/znicholls/the-littlest-jupyterhub.git}
 TLJH_INSTALL_PIP_FLAGS=${TLJH_INSTALL_PIP_FLAGS:---no-cache-dir}
 
 
