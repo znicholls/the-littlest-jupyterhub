@@ -45,6 +45,5 @@ function install_miniconda {
 HUB_CONDA_DIR=${TLJH_INSTALL_PREFIX}/hub
 install_miniconda ${HUB_CONDA_DIR}
 ${HUB_CONDA_DIR}/bin/pip install --upgrade ${TLJH_INSTALL_PIP_FLAGS} ${TLJH_INSTALL_PIP_SPEC}
-source ${TLJH_ENV_PATH}
 
 ${HUB_CONDA_DIR}/bin/python3 -m tljh.installer
