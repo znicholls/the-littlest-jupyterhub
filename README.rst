@@ -202,8 +202,6 @@ Once in the editor, make the contents of the file
 
 .. code-block:: bash
 
-    !#/bin/bash
-
     export GITLAB_CLIENT_ID=<copy_application_id_from_gitlab>
     export GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
     export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
@@ -244,8 +242,6 @@ Next make a file called ``jupyterhub-env`` in ``/root/jupyterhubenv/env`` (if yo
 Once in the editor, make the contents of the file
 
 .. code-block:: bash
-
-    !#/bin/bash
 
     export GITHUB_CLIENT_ID=<copy_from_github>
     export GITHUB_CLIENT_SECRET=<also_copy_from_github>
