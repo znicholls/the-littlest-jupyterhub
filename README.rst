@@ -16,10 +16,14 @@ more information.
 Quick Start
 -----------
 
+*Warning:* I have destroyed this for now, will have to fix later. For now you have to do all the Let's Encrypt, GitLab and user specification authentication stuff first.
+
 On a fresh Ubuntu 18.04 server, you can install The Littlest JupyterHub with:
 
 .. code-block:: bash
 
+   sudo apt-get update
+   sudo apt-get install git
    curl https://raw.githubusercontent.com/znicholls/the-littlest-jupyterhub/master/installer/install.bash | sudo bash -
 
 This takes 2-5 minutes to run. When completed, you can access your new JupyterHub
@@ -74,7 +78,7 @@ To generate your SSL certificate, all you need to do is (remove the ``-y`` flags
     sudo add-apt-repository [-y] ppa:certbot/certbot
     sudo apt-get update
     sudo apt-get [-y] install certbot
-    sudo certbot certonly --standalone -d <domain-name>
+    sudo certbot certonly --keep-until-expiring --standalone --email '<your-contact-email>' -d <domain-name>
 
 e.g.
 
@@ -85,7 +89,7 @@ e.g.
     sudo add-apt-repository [-y] ppa:certbot/certbot
     sudo apt-get update
     sudo apt-get [-y] install certbot
-    sudo certbot certonly --standalone -d myawesomecourse.com.au
+    sudo certbot certonly --standalone --email 'billblogs@gmail.com' -d myawesomecourse.com.au
 
 If successful, the output will include a line like
 
@@ -130,6 +134,18 @@ Change the last line to
 
     0 3 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot renew --pre-hook "systemctl stop jupyterhub configurable-http-proxy" --post-hook "systemctl restart jupyterhub"
 
+Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
+
+.. code-block:: python
+
+    # use SSL port
+    c.JupyterHub.port = 443
+    c.JupyterHub.ssl_key = '/etc/letsencrypt/live/course.magicc.org/privkey.pem'
+    c.JupyterHub.ssl_cert = '/etc/letsencrypt/live/course.magicc.org/fullchain.pem'
+
+    # redirect http queries to https
+    c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
+
 Self-signed Certificate
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -159,6 +175,8 @@ Example answers to questions:
 - *Organizational Unit*: Department of Pyschology
 - *Common Name*: Bill Blogs
 - *Email Address*: bbblogs@gmail.com
+
+TODO: Add bit telling you what to add to `jupyterhub_config.py` to use this certificate
 
 Adding GitLab/GitHub Authentication
 -----------------------------------
@@ -262,9 +280,9 @@ We can specify users by adding the following text to ``/opt/tljh/config.yaml``. 
 
     users:
       allowed:
-        <allowed-user-1>
-        <allowed-user-2>
-        <allowed-user-3>
+        - <allowed-user-1>
+        - <allowed-user-2>
+        - <allowed-user-3>
       admin:
-        <admin-user-1>
-        <admin-user-2>
+        - <admin-user-1>
+        - <admin-user-2>

@@ -19,7 +19,7 @@ ProtectKernelModules=yes
 # Source CONFIGPROXY_AUTH_TOKEN from here!
 EnvironmentFile={install_prefix}/configurable-http-proxy.secret
 Environment=TLJH_INSTALL_PREFIX={install_prefix}
-ExecStart=source /root/jupyterhubenv/env && {python_interpreter_path} -m jupyterhub.app -f {jupyterhub_config_path}
+ExecStart=/bin/bash /root/jupyterhubenv/env && {python_interpreter_path} -m jupyterhub.app -f {jupyterhub_config_path}
 
 [Install]
 # Start service when system boots
