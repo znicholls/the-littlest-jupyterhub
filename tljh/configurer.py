@@ -46,10 +46,11 @@ def apply_yaml_config(path, c):
                 default,
                 yaml.safe_load(f)
             )
-        explode
+        print('merging')
     else:
         tljh_config = copy.deepcopy(default)
-        implode
+        print('using default')
+    print(tljh_config)
 
     update_auth(c, tljh_config)
     update_userlists(c, tljh_config)
