@@ -14,7 +14,6 @@ class CustomSpawner(SystemdSpawner):
         Perform system user activities before starting server
         """
         # FIXME: Move this elsewhere? Into the Authenticator?
-        print(os.environ('GITLAB_CLIENT_ID'))
         user.ensure_user(self.user.name)
         user.ensure_user_group(self.user.name, 'jupyterhub-users')
         if self.user.admin:
