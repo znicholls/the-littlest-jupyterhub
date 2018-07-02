@@ -30,7 +30,7 @@ def ensure_jupyterhub_service(prefix):
     systemd.install_unit('jupyterhub.service', hub_unit_template.format(**unit_params))
     systemd.reload_daemon()
 
-    # Set up proxy / hub secret oken if it is not already setup
+    # Set up proxy / hub secret token if it is not already setup
     # FIXME: Check umask here properly
     proxy_secret_path = os.path.join(INSTALL_PREFIX, 'configurable-http-proxy.secret')
     if not os.path.exists(proxy_secret_path):

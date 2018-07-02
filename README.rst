@@ -202,9 +202,9 @@ Once in the editor, make the contents of the file
 
 .. code-block:: bash
 
-    export GITLAB_CLIENT_ID=<copy_application_id_from_gitlab>
-    export GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
-    export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
+    GITLAB_CLIENT_ID=<copy_application_id_from_gitlab>
+    GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
+    OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
 Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
@@ -243,9 +243,9 @@ Once in the editor, make the contents of the file
 
 .. code-block:: bash
 
-    export GITHUB_CLIENT_ID=<copy_from_github>
-    export GITHUB_CLIENT_SECRET=<also_copy_from_github>
-    export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
+    GITHUB_CLIENT_ID=<copy_from_github>
+    GITHUB_CLIENT_SECRET=<also_copy_from_github>
+    OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
 Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
