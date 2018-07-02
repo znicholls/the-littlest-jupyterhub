@@ -42,9 +42,9 @@ def apply_yaml_config(path, c):
                 default,
                 yaml.safe_load(f)
             )
-            print(tljh_config)
     else:
         tljh_config = copy.deepcopy(default)
+    print(tljh_config)
 
     update_auth(c, tljh_config)
     update_userlists(c, tljh_config)
