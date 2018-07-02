@@ -188,7 +188,7 @@ Once in the editor, make the contents of the file
     export GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
     export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
-Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
+Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
 .. code-block:: python
 
@@ -198,7 +198,7 @@ Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
 
-and finally, to ``/opt/tljh/config.yaml``, add
+and finally, to ``/opt/tljh/config.yaml``, add (TODO: work out how this actually works, currently just overwriting defauls)
 
 .. code-block:: yaml
 
@@ -229,7 +229,7 @@ Once in the editor, make the contents of the file
     export GITHUB_CLIENT_SECRET=<also_copy_from_github>
     export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
 
-Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
+Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
 .. code-block:: python
 
@@ -239,7 +239,7 @@ Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
 
-and finally, to ``/opt/tljh/config.yaml``, add
+and finally, to ``/opt/tljh/config.yaml``, add (TODO: work out how this actually works, currently just overwriting defauls)
 
 .. code-block:: yaml
 
@@ -256,7 +256,7 @@ Specifying Users
 
 As the hub is set up by default, anyone who can authenticate will also be able to create a user profile. Whilst this is simple, it may not exactly be our desired behaviour. Fortunately, the hub provides the ability to control who can access the hub and who cannot as shown.
 
-We can specify users by adding the following text to ``/opt/tljh/config.yaml``. ``admin`` will have full access to configure the hub whilst ``allowed`` users specifies all users who can login.
+We can specify users by adding the following text to ``/opt/tljh/config.yaml``. ``admin`` will have full access to configure the hub whilst ``allowed`` users specifies all users who can login. (TODO: work out how this actually works, currently just overwriting defauls)
 
 .. code-block:: yaml
 

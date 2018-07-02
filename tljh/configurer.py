@@ -15,13 +15,17 @@ import yaml
 # User provided config is merged into this
 default = {
     'auth': {
-        'type': 'dummy',
+        'type': 'GitLab',
         'dummy': {}
     },
     'users': {
-        'allowed': [],
+        'allowed': ['znicholls',
+                    'sfiddes',
+                    'mmalte',
+                    'malte.meinshausen',
+                    'rgieseke',],
         'banned': [],
-        'admin': []
+        'admin': ['znicholls']
     },
     'limits': {
         'memory': '1G',
