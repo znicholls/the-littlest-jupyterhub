@@ -5,7 +5,7 @@ set -exuo pipefail
 TLJH_INSTALL_PREFIX=${TLJH_INSTALL_PREFIX:-/opt/tljh}
 TLJH_INSTALL_PIP_SPEC=${TLJH_INSTALL_PIP_SPEC:-git+https://github.com/znicholls/the-littlest-jupyterhub.git}
 TLJH_INSTALL_PIP_FLAGS=${TLJH_INSTALL_PIP_FLAGS:---no-cache-dir}
-
+TLJH_ENV_PATH=/root/jupyterhubenv/env
 
 function install_miniconda {
     CONDA_DIR=${1}
@@ -45,5 +45,6 @@ function install_miniconda {
 HUB_CONDA_DIR=${TLJH_INSTALL_PREFIX}/hub
 install_miniconda ${HUB_CONDA_DIR}
 ${HUB_CONDA_DIR}/bin/pip install --upgrade ${TLJH_INSTALL_PIP_FLAGS} ${TLJH_INSTALL_PIP_SPEC}
+source ${TLJH_ENV_PATH}
 
 ${HUB_CONDA_DIR}/bin/python3 -m tljh.installer

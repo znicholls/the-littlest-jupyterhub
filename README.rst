@@ -160,3 +160,96 @@ Example answers to questions:
 - *Common Name*: Bill Blogs
 - *Email Address*: bbblogs@gmail.com
 
+Adding GitLab/GitHub Authentication
+-----------------------------------
+
+Resources: `Min's Overview Video <https://www.youtube.com/watch?v=gSVvxOchT8Y&feature=youtu.be>`_
+
+GitLab
+~~~~~~
+
+TODO: Add switch to make this a choice, not the default
+
+Resources: `JupyterHub GitLab Authenticator Example <https://github.com/jupyterhub/oauthenticator#gitlab-setup>`_
+
+Login to `<gitlab.com>`_ then go to *Settings* (click on your photo in the top right-hand corner then select from the drop-down menu) --> *Applications* (in left-hand sidebar) and fill out the form. Redirect URL must be `https://<your-domain-or-ip-address>/hub/oauth_callback`. Don't tick any of the scope boxes. Hit *Save Application*. The information on the page you see next is what we now need so don't close it.
+
+Next make a file called ``jupyterhub-env`` in ``/root/jupyterhubenv/env`` (if you want to change this path or filename then you're going to have to change where ``tljh`` looks for its environment too) by executing the following in a shell:
+
+.. code-block:: bash
+
+    sudo <editor-of-choice> /root/jupyterhubenv/env
+
+Once in the editor, make the contents of the file
+
+.. code-block:: bash
+
+    export GITLAB_CLIENT_ID=<copy_application_id_from_gitlab>
+    export GITLAB_CLIENT_SECRET=<copy_secret_from_gitlab>
+    export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
+
+Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py`` (there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
+
+.. code-block:: python
+
+    from oauthenticator.gitlab import LocalGitLabOAuthenticator
+    c.JupyterHub.authenticator_class = LocalGitLabOAuthenticator
+    # make a user on the system if they don't already exist
+    c.LocalGitLabOAuthenticator.create_system_users = True
+    c.LocalGitLabOAuthenticator.delete_invalid_users = True
+
+GitHub
+~~~~~~
+
+TODO: add switch to actually make this possible in one line
+
+Resources: `Min's Overview Video <https://www.youtube.com/watch?v=gSVvxOchT8Y&feature=youtu.be>`_
+
+Go to `<https://github.com/settings/applications/new>`_. Fill out the boxes with whatever you want (the first 3 don't actually matter). The one that matters is the *Authorization callback URL*. This must be `https://<your-domain-or-ip-address>/hub/oauth_callback`. Hit *Register application*. The information on the page you see next is what we now need so don't close it.
+
+Next make a file called ``jupyterhub-env`` in ``/root/jupyterhubenv/env`` (if you want to change this path or filename then you're going to have to change where ``tljh`` looks for its environment too) by executing the following in a shell:
+
+.. code-block:: bash
+
+    sudo <editor-of-choice> /root/jupyterhubenv/env
+
+Once in the editor, make the contents of the file
+
+.. code-block:: bash
+
+    export GITHUB_CLIENT_ID=<copy_from_github>
+    export GITHUB_CLIENT_SECRET=<also_copy_from_github>
+    export OAUTH_CALLBACK_URL=https://<YOURDOMAIN>/hub/oauth_callback
+
+Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py`` (there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
+
+.. code-block:: python
+
+    from oauthenticator.github import LocalGitHubOAuthenticator
+    c.JupyterHub.authenticator_class = LocalGitHubOAuthenticator
+    # make a user on the system if they don't already exist
+    c.LocalGitLabOAuthenticator.create_system_users = True
+    c.LocalGitLabOAuthenticator.delete_invalid_users = True
+
+AAF Authorisation
+~~~~~~~~~~~~~~~~~
+
+Need someone clever to write this
+
+Specifying Users
+----------------
+
+(there's probably a way to do this through the yaml config but I haven't got my head around how that works yet)
+
+As the hub is set up by default, anyone who can authenticate will also be able to create a user profile. Whilst this is simple, it may not exactly be our desired behaviour. Fortunately, the hub provides the ability to control who can access the hub and who cannot as shown.
+
+We can specify users as shown below. ``admin_users`` will have full access to configure the hub whilst the ``whitelist`` specifies the allowed users.
+
+.. code-block:: python
+
+    c.Authenticator.admin_users = {'<admin_user_1>', '<admin_user_2>'}
+    c.Authenticator.whitelist = {
+        '<allowed_user_1>',
+        '<allowed_user_2>',
+        '<allowed_user_3>',
+    }

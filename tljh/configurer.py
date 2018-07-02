@@ -38,7 +38,10 @@ def apply_yaml_config(path, c):
     if os.path.exists(path):
         with open(path) as f:
             # FIXME: Figure out correct order of merging here
-            tljh_config = _merge_dictionaries(default, yaml.safe_load(f))
+            tljh_config = _merge_dictionaries(
+                default,
+                yaml.safe_load(f)
+            )
     else:
         tljh_config = copy.deepcopy(default)
 
