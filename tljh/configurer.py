@@ -15,17 +15,13 @@ import yaml
 # User provided config is merged into this
 default = {
     'auth': {
-        'type': 'GitLab',
+        'type': 'dummy',
         'dummy': {}
     },
     'users': {
-        'allowed': ['znicholls',
-                    'sfiddes',
-                    'mmalte',
-                    'malte.meinshausen',
-                    'rgieseke',],
+        'allowed': [],
         'banned': [],
-        'admin': ['znicholls']
+        'admin': []
     },
     'limits': {
         'memory': '1G',
@@ -46,11 +42,8 @@ def apply_yaml_config(path, c):
                 default,
                 yaml.safe_load(f)
             )
-        print('merging')
     else:
         tljh_config = copy.deepcopy(default)
-        print('using default')
-    print(tljh_config)
 
     update_auth(c, tljh_config)
     update_userlists(c, tljh_config)

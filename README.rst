@@ -198,12 +198,12 @@ Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
 
-and finally, to ``/opt/tljh/config.yaml``, add (TODO: work out how this actually works, currently just overwriting defauls)
+and finally, to ``/opt/tljh/config.yaml`` add
 
 .. code-block:: yaml
 
     auth:
-      - type: GitLab # at the moment this could be any string but that's a bug fix for future
+      type: GitLab # at the moment this could be any string but that's a bug fix for future
 
 
 GitHub
@@ -239,7 +239,7 @@ Next, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py
     c.LocalGitLabOAuthenticator.create_system_users = True
     c.LocalGitLabOAuthenticator.delete_invalid_users = True
 
-and finally, to ``/opt/tljh/config.yaml``, add (TODO: work out how this actually works, currently just overwriting defauls)
+and finally, to ``/opt/tljh/config.yaml``, add
 
 .. code-block:: yaml
 
@@ -256,15 +256,15 @@ Specifying Users
 
 As the hub is set up by default, anyone who can authenticate will also be able to create a user profile. Whilst this is simple, it may not exactly be our desired behaviour. Fortunately, the hub provides the ability to control who can access the hub and who cannot as shown.
 
-We can specify users by adding the following text to ``/opt/tljh/config.yaml``. ``admin`` will have full access to configure the hub whilst ``allowed`` users specifies all users who can login. (TODO: work out how this actually works, currently just overwriting defauls)
+We can specify users by adding the following text to ``/opt/tljh/config.yaml``. ``admin`` will have full access to configure the hub whilst ``allowed`` users specifies all users who can login.
 
 .. code-block:: yaml
 
     users:
       allowed:
-        - <allowed-user-1>
-        - <allowed-user-2>
-        - <allowed-user-3>
+        <allowed-user-1>
+        <allowed-user-2>
+        <allowed-user-3>
       admin:
-        - <admin-user-1>
-        - <admin-user-2>
+        <admin-user-1>
+        <admin-user-2>
