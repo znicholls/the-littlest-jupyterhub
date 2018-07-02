@@ -22,7 +22,7 @@ On a fresh Ubuntu 18.04 server, you can install The Littlest JupyterHub with:
 
 .. code-block:: bash
 
-   curl https://raw.githubusercontent.com/yuvipanda/the-littlest-jupyterhub/master/installer/install.bash | sudo bash -
+   curl https://raw.githubusercontent.com/znicholls/the-littlest-jupyterhub/master/installer/install.bash | sudo bash -
 
 This takes 2-5 minutes to run. When completed, you can access your new JupyterHub
 at the public IP of your server (on the default http port 80)!
