@@ -65,10 +65,6 @@ def ensure_jupyterhub_package(prefix):
         'jupyterhub-systemdspawner==0.9.12',
     ])
 
-import pdb
-pdb.set_trace()
-# do ssl stuff in here and replace below
-
 ensure_jupyterhub_package(HUB_ENV_PREFIX)
 ensure_jupyterhub_service(HUB_ENV_PREFIX)
 

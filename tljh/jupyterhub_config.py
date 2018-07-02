@@ -24,7 +24,13 @@ class CustomSpawner(SystemdSpawner):
 
 c.JupyterHub.spawner_class = CustomSpawner
 
-c.JupyterHub.port = 80
+# use SSL port
+c.JupyterHub.port = 443
+c.JupyterHub.ssl_key = '/etc/letsencrypt/live/course.magicc.org/privkey.pem'
+c.JupyterHub.ssl_cert = '/etc/letsencrypt/live/course.magicc.org/fullchain.pem'
+
+# redirect http queries to https
+c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
 
 # Use a high port so users can try this on machines with a JupyterHub already present
 c.JupyterHub.hub_port = 15001
