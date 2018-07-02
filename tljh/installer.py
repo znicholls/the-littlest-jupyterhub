@@ -28,7 +28,6 @@ def ensure_jupyterhub_service(prefix):
         install_prefix=INSTALL_PREFIX
     )
     systemd.install_unit('configurable-http-proxy.service', proxy_unit_template.format(**unit_params))
-    print(hub_unit_template.format(**unit_params))
     systemd.install_unit('jupyterhub.service', hub_unit_template.format(**unit_params))
     systemd.reload_daemon()
 
