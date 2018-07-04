@@ -39,9 +39,7 @@ Notation
 
 ``<name>`` indicates that you should replace ``<name>`` including the ``<>`` with the appropriate file, variable, path etc. For example, ``ls <path>`` could become ``ls the-littlest-jupyterhub/tests``
 
-In code, ``[]`` denotes things which are optional. For example ``command [-f] output.py`` means that you can either execute
-In code, ``[]`` denotes things which are optional. For example ``command -f output.py`` or
-In code, ``[]`` denotes things which are optional. For example ``command output.py``. We will always explain what the different options mean (and if we don't, please make an issue or a pull request to remedy this!).
+In code, ``[]`` denotes things which are optional. For example ``command [-f] output.py`` means that you can either execute ``command -f output.py`` or ``command output.py``. We will always explain what the different options mean (and if we don't, please make an issue or a pull request to remedy this!).
 
 Stopping JupyterHub
 -------------------
