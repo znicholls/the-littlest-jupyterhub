@@ -2,6 +2,7 @@
 JupyterHub config for the littlest jupyterhub.
 """
 import os
+from os import makedirs
 from os import listdir
 from os.path import isdir, isfile, expanduser, isfile, join
 from shutil import copyfile
@@ -26,6 +27,9 @@ class CustomSpawner(SystemdSpawner):
 
         if not isdir(NOTEBOOKS_REPO_DIR):
             Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
+
+        if not isdir(NOTEBOOKS_USER_DIR):
+            makedirs(NOTEBOOKS_USER_DIR)
 
         notebooks_repo = Git(NOTEBOOKS_REPO_DIR)
         notebooks_repo.pull()
