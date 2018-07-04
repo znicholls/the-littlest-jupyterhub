@@ -2,18 +2,40 @@
 JupyterHub config for the littlest jupyterhub.
 """
 import os
+from os.path import isdir, isfile, expanduser, isfile, join
+from shutil import copyfile
 from systemdspawner import SystemdSpawner
 from tljh import user, configurer
+from git import Repo
+from git.cmd import Git
 
 INSTALL_PREFIX = os.environ.get('TLJH_INSTALL_PREFIX', '/opt/tljh')
 USER_ENV_PREFIX = os.path.join(INSTALL_PREFIX, 'user')
 
 class CustomSpawner(SystemdSpawner):
+    NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
+    NOTEBOOKS_REPO_DIR = '/data/notebooks'
+    NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
+    NOTEBOOKS_USER_DIR = expanduser(join('~', 'notebooks', 'tutorials'))
+
     def start(self):
         """
         Perform system user activities before starting server
         """
         # FIXME: Move this elsewhere? Into the Authenticator?
+        if not isdir(NOTEBOOKS_REPO_DIR):
+            Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
+
+        notebooks_repo = Git(NOTEBOOKS_REPO_DIR)
+        notebooks_repo.pull()
+
+        for file_notebook in listdir(NOTEBOOKS_SRC_DIR):
+            source_notebook = join(NOTEBOOKS_SRC_DIR, file_notebook)
+            user_notebook = join(NOTEBOOKS_USER_DIR, file_notebook)
+            if file.endswith('.ipynb'):
+                if not isfile(user_notebook):
+                    copyfile(source_notebook, user_notebook)
+
         user.ensure_user(self.user.name)
         user.ensure_user_group(self.user.name, 'jupyterhub-users')
         if self.user.admin:

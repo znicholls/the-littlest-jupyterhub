@@ -13,5 +13,6 @@ setup(
     install_requires=[
         'pyyaml==3.*',
         'oauthenticator',
+        'GitPython',
     ]
 )
