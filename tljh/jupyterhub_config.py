@@ -13,16 +13,16 @@ INSTALL_PREFIX = os.environ.get('TLJH_INSTALL_PREFIX', '/opt/tljh')
 USER_ENV_PREFIX = os.path.join(INSTALL_PREFIX, 'user')
 
 class CustomSpawner(SystemdSpawner):
-    NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
-    NOTEBOOKS_REPO_DIR = '/data/notebooks'
-    NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
-    NOTEBOOKS_USER_DIR = expanduser(join('~', 'notebooks', 'tutorials'))
-
     def start(self):
         """
         Perform system user activities before starting server
         """
         # FIXME: Move this elsewhere? Into the Authenticator?
+        NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
+        NOTEBOOKS_REPO_DIR = '/data/notebooks'
+        NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
+        NOTEBOOKS_USER_DIR = expanduser(join('~', 'notebooks', 'tutorials'))
+
         if not isdir(NOTEBOOKS_REPO_DIR):
             Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
 
