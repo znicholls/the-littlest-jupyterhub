@@ -2,6 +2,7 @@
 JupyterHub config for the littlest jupyterhub.
 """
 import os
+from os import listdir
 from os.path import isdir, isfile, expanduser, isfile, join
 from shutil import copyfile
 from systemdspawner import SystemdSpawner
