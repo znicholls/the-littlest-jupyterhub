@@ -30,12 +30,15 @@ class CustomSpawner(SystemdSpawner):
         notebooks_repo = Git(NOTEBOOKS_REPO_DIR)
         notebooks_repo.pull()
 
-        for file_notebook in listdir(NOTEBOOKS_SRC_DIR):
+        notebook_files = [
+            f for f in listdir(NOTEBOOKS_SRC_DIR)
+            if f.endswith('.ipynb')
+        ]
+        for file_notebook in notebook_files:
             source_notebook = join(NOTEBOOKS_SRC_DIR, file_notebook)
             user_notebook = join(NOTEBOOKS_USER_DIR, file_notebook)
-            if file.endswith('.ipynb'):
-                if not isfile(user_notebook):
-                    copyfile(source_notebook, user_notebook)
+            if not isfile(user_notebook):
+                copyfile(source_notebook, user_notebook)
 
         user.ensure_user(self.user.name)
         user.ensure_user_group(self.user.name, 'jupyterhub-users')
