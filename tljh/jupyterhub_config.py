@@ -23,7 +23,9 @@ class CustomSpawner(SystemdSpawner):
         NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
         NOTEBOOKS_REPO_DIR = '/data/notebooks'
         NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
-        NOTEBOOKS_USER_DIR = expanduser(join('~', 'notebooks', 'tutorials'))
+        NOTEBOOKS_USER_DIR = join('/home', self.user.name, 'notebooks', 'tutorials')
+        print(self.user)
+        print(dir(self.user))
 
         if not isdir(NOTEBOOKS_REPO_DIR):
             Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
