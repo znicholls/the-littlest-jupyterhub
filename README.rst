@@ -286,3 +286,21 @@ We can specify users by adding the following text to ``/opt/tljh/config.yaml``. 
       admin:
         - <admin-user-1>
         - <admin-user-2>
+
+Using Git
+---------
+
+To do this, you need to make sure that you can access git repositories from the server. If they're public, it's all ok. If they're private, you're going to need to add an ssh-key to your GitHub/GitLab/etc. account. This can be done with the following
+
+.. code-block:: bash
+
+    ssh-keygen -t rsa -C "<your-email>" -b 4096 -f ~/.ssh/<name-of-key>
+
+Then copy the contents of ``<name-of-key>.pub`` (not ``<name-of-key>``!, that's your private key) to your GitHub/GitLab account. Then add the following to your ``~/.ssh/config``
+
+.. code-block::
+
+    # <Hostname> server
+    Host gitlab.com # or github.com
+        RSAAuthentication yes
+        IdentityFile ~/.ssh/<name-of-key>
