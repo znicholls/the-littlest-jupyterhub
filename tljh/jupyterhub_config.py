@@ -2,10 +2,12 @@
 JupyterHub config for the littlest jupyterhub.
 """
 import os
-from os import makedirs
-from os import listdir
+from os import makedirs, chown, listdir
 from os.path import isdir, isfile, expanduser, isfile, join
 from shutil import copyfile
+import pwd
+import grp
+
 from systemdspawner import SystemdSpawner
 from tljh import user, configurer
 from git import Repo
@@ -43,6 +45,11 @@ class CustomSpawner(SystemdSpawner):
             user_notebook = join(NOTEBOOKS_USER_DIR, file_notebook)
             if not isfile(user_notebook):
                 copyfile(source_notebook, user_notebook)
+                chown(
+                    user_notebook,
+                    pwd.getpwnam(self.user.name).pw_uid,
+                    grp.getgrnam(self.user.name).gr_gid,
+                )
 
         user.ensure_user(self.user.name)
         user.ensure_user_group(self.user.name, 'jupyterhub-users')

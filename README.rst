@@ -130,7 +130,7 @@ Change the last line to
 
 .. code-block::
 
-    0 3 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot renew --pre-hook "systemctl stop jupyterhub configurable-http-proxy" --post-hook "systemctl restart jupyterhub"
+    0 3 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot -q renew --pre-hook "systemctl stop jupyterhub configurable-http-proxy" --post-hook "systemctl restart jupyterhub"
 
 Finally, add the following to ``./the-littlest-jupyterhub/tljh/jupyterhub_config.py``
 
@@ -190,7 +190,7 @@ Resources: `JupyterHub GitLab Authenticator Example <https://github.com/jupyterh
 
 Login to `<gitlab.com>`_ then go to *Settings* (click on your photo in the top right-hand corner then select from the drop-down menu) --> *Applications* (in left-hand sidebar) and fill out the form. Redirect URL must be `https://<your-domain-or-ip-address>/hub/oauth_callback`. Don't tick any of the scope boxes. Hit *Save Application*. The information on the page you see next is what we now need so don't close it.
 
-Next make a file called ``jupyterhub-env`` in ``/root/jupyterhubenv/env`` (if you want to change this path or filename then you're going to have to change where ``tljh`` looks for its environment too) by executing the following in a shell:
+Next make a file called ``env`` in ``/root/jupyterhubenv/env`` (if you want to change this path or filename then you're going to have to change where ``tljh`` looks for its environment too) by executing the following in a shell:
 
 .. code-block:: bash
 
