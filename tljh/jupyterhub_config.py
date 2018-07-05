@@ -2,7 +2,7 @@
 JupyterHub config for the littlest jupyterhub.
 """
 import os
-from os import makedirs, chown, listdir
+from os import makedirs, chown, listdir, walk
 from os.path import isdir, isfile, expanduser, isfile, join
 from shutil import copyfile
 import pwd
@@ -22,10 +22,18 @@ class CustomSpawner(SystemdSpawner):
         Perform system user activities before starting server
         """
         # FIXME: Move this elsewhere? Into the Authenticator?
+        user.ensure_user(self.user.name)
+        user.ensure_user_group(self.user.name, 'jupyterhub-users')
+        if self.user.admin:
+            user.ensure_user_group(self.user.name, 'jupyterhub-admins')
+        else:
+            user.remove_user_group(self.user.name, 'jupyterhub-admins')
+
         NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
         NOTEBOOKS_REPO_DIR = '/data/notebooks'
         NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
-        NOTEBOOKS_USER_DIR = join('/home', self.user.name, 'notebooks', 'tutorials')
+        USER_ROOT = join('/home', self.user.name)
+        NOTEBOOKS_USER_DIR = join(USER_ROOT, 'notebooks', 'tutorials')
 
         if not isdir(NOTEBOOKS_REPO_DIR):
             Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
@@ -45,18 +53,15 @@ class CustomSpawner(SystemdSpawner):
             user_notebook = join(NOTEBOOKS_USER_DIR, file_notebook)
             if not isfile(user_notebook):
                 copyfile(source_notebook, user_notebook)
-                chown(
-                    user_notebook,
-                    pwd.getpwnam(self.user.name).pw_uid,
-                    grp.getgrnam(self.user.name).gr_gid,
-                )
 
-        user.ensure_user(self.user.name)
-        user.ensure_user_group(self.user.name, 'jupyterhub-users')
-        if self.user.admin:
-            user.ensure_user_group(self.user.name, 'jupyterhub-admins')
-        else:
-            user.remove_user_group(self.user.name, 'jupyterhub-admins')
+        user_uid = pwd.getpwnam(self.user.name).pw_uid
+        user_gid = grp.getgrnam(self.user.name).gr_gid
+        for root, dirs, files in walk(USER_ROOT):
+            for momo in dirs:
+                chown(join(root, momo), user_uid, user_gid)
+            for momo in files:
+                chown(join(root, momo), user_uid, user_gid)
+
         return super().start()
 
 c.JupyterHub.spawner_class = CustomSpawner
