@@ -30,8 +30,8 @@ class CustomSpawner(SystemdSpawner):
             user.remove_user_group(self.user.name, 'jupyterhub-admins')
 
         NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
-        NOTEBOOKS_REPO_DIR = '/data/notebooks'
-        NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'tutorials')
+        NOTEBOOKS_REPO_DIR = '/data/notebooks-repo'
+        NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'notebooks', 'tutorials')
         USER_ROOT = join('/home', self.user.name)
         NOTEBOOKS_USER_DIR = join(USER_ROOT, 'notebooks', 'tutorials')
 
