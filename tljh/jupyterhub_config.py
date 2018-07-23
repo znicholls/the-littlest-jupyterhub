@@ -68,8 +68,10 @@ c.JupyterHub.spawner_class = CustomSpawner
 
 # use SSL port
 c.JupyterHub.port = 443
-c.JupyterHub.ssl_key = '/etc/letsencrypt/live/course.magicc.org/privkey.pem'
-c.JupyterHub.ssl_cert = '/etc/letsencrypt/live/course.magicc.org/fullchain.pem'
+letsencrypt_folder = '/etc/letsencrypt/live'
+domain_folder = listdir(letsencrypt_folder)[0]
+c.JupyterHub.ssl_key = join(letsencrypt_folder, domain_folder, 'privkey.pem')
+c.JupyterHub.ssl_cert = join(letsencrypt_folder, domain_folder, 'fullchain.pem')
 
 # redirect http queries to https
 c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
