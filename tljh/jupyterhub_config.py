@@ -87,4 +87,7 @@ c.SystemdSpawner.default_shell = '/bin/bash'
 # Drop the '-singleuser' suffix present in the default template
 c.SystemdSpawner.unit_name_template = 'jupyter-{USERNAME}'
 
+# limit memory usage for each user
+c.SystemdSpawner.mem_limit = '0.5G'
+
 configurer.apply_yaml_config(os.path.join(INSTALL_PREFIX, 'config.yaml'), c)
