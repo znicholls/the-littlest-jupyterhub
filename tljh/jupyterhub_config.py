@@ -53,7 +53,7 @@ class CustomSpawner(SystemdSpawner):
         root_uid = pwd.getpwnam("root").pw_uid
         root_gid = grp.getgrnam("root").gr_gid
         for src_subdir_to_lock in NOTEBOOKS_SRC_SUBDIRS_TO_LOCK:
-            dir_to_lock = join(NOTEBOOKS_REPO_DIR, src_subdir_to_lock)
+            dir_to_lock = join(NOTEBOOKS_SRC_DIR, src_subdir_to_lock)
             nrdmode = os.stat(dir_to_lock)
             if (nrdmode.st_mode & stat.S_IRWXO != 0) or (nrdmode.st_mode & stat.S_IRWXG != 0):
                 chown(dir_to_lock, root_uid, root_gid)
