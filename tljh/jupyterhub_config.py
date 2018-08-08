@@ -31,9 +31,14 @@ class CustomSpawner(SystemdSpawner):
 
         NOTEBOOKS_REPO_URL = 'git@gitlab.com:climate-modelling-climate-change-erth90026/notebooks.git'
         NOTEBOOKS_REPO_DIR = '/data/notebooks-repo'
-        NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'notebooks', 'tutorials')
+        NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'notebooks')
+        NOTEBOOKS_SRC_SUBDIRS_TO_COPY = [
+            'tutorials',
+            'assignments',
+        ]
         USER_ROOT = join('/home', self.user.name)
-        NOTEBOOKS_USER_DIR = join(USER_ROOT, 'notebooks', 'tutorials')
+        # NOTEBOOKS_USER_DIR = join(USER_ROOT, 'notebooks', 'tutorials')
+        NOTEBOOKS_USER_DIR = join(USER_ROOT, 'notebooks')
 
         if not isdir(NOTEBOOKS_REPO_DIR):
             Repo.clone_from(NOTEBOOKS_REPO_URL, NOTEBOOKS_REPO_DIR)
@@ -41,26 +46,37 @@ class CustomSpawner(SystemdSpawner):
         notebooks_repo = Git(NOTEBOOKS_REPO_DIR)
         notebooks_repo.pull()
 
+        root_uid = pwd.getpwnam("root").pw_uid
+        root_gid = grp.getgrnam("root").gr_gid
+        chown(NOTEBOOKS_REPO_DIR, root_uid, root_gid)
+
         if not isdir(NOTEBOOKS_USER_DIR):
             makedirs(NOTEBOOKS_USER_DIR)
 
-        notebook_files = [
-            f for f in listdir(NOTEBOOKS_SRC_DIR)
-            if f.endswith('.ipynb')
-        ]
-        for file_notebook in notebook_files:
-            source_notebook = join(NOTEBOOKS_SRC_DIR, file_notebook)
-            user_notebook = join(NOTEBOOKS_USER_DIR, file_notebook)
-            if not isfile(user_notebook):
-                copyfile(source_notebook, user_notebook)
+        for src_subdir in NOTEBOOKS_SRC_SUBDIRS_TO_COPY:
+            src_dir = join(NOTEBOOKS_SRC_DIR, src_subdir)
 
-        user_uid = pwd.getpwnam(self.user.name).pw_uid
-        user_gid = grp.getgrnam(self.user.name).gr_gid
-        for root, dirs, files in walk(USER_ROOT):
-            for momo in dirs:
-                chown(join(root, momo), user_uid, user_gid)
-            for momo in files:
-                chown(join(root, momo), user_uid, user_gid)
+            usr_dir = join(NOTEBOOKS_USER_DIR, src_subdir)
+            if not isdir(usr_dir):
+                makedirs(usr_dir)
+
+            notebook_files = [
+                f for f in listdir(src_dir)
+                if f.endswith('.ipynb')
+            ]
+            for file_notebook in notebook_files:
+                source_notebook = join(src_dir, file_notebook)
+                user_notebook = join(usr_dir, file_notebook)
+                if not isfile(user_notebook):
+                    copyfile(source_notebook, user_notebook)
+
+            user_uid = pwd.getpwnam(self.user.name).pw_uid
+            user_gid = grp.getgrnam(self.user.name).gr_gid
+            for root, dirs, files in walk(USER_ROOT):
+                for momo in dirs:
+                    chown(join(root, momo), user_uid, user_gid)
+                for momo in files:
+                    chown(join(root, momo), user_uid, user_gid)
 
         return super().start()
 
