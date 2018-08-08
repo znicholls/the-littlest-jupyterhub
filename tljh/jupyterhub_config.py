@@ -4,6 +4,7 @@ JupyterHub config for the littlest jupyterhub.
 import os
 from os import makedirs, chown, chmod, listdir, walk
 from os.path import isdir, isfile, expanduser, isfile, join
+import stat
 from shutil import copyfile
 import pwd
 import grp
@@ -48,8 +49,10 @@ class CustomSpawner(SystemdSpawner):
 
         root_uid = pwd.getpwnam("root").pw_uid
         root_gid = grp.getgrnam("root").gr_gid
-        chown(NOTEBOOKS_REPO_DIR, root_uid, root_gid)
-        chmod(NOTEBOOKS_REPO_DIR, 0o700)
+        nrdmode = os.stat(NOTEBOOKS_REPO_DIR)
+        if (nrdmode.st_mode & stat.S_IRWXO != 0) or (nrdmode.st_mode & stat.S_IRWXG != 0):
+            chown(NOTEBOOKS_REPO_DIR, root_uid, root_gid)
+            chmod(NOTEBOOKS_REPO_DIR, 0o700)
 
         if not isdir(NOTEBOOKS_USER_DIR):
             makedirs(NOTEBOOKS_USER_DIR)
