@@ -35,6 +35,7 @@ class CustomSpawner(SystemdSpawner):
         NOTEBOOKS_SRC_DIR = join(NOTEBOOKS_REPO_DIR, 'notebooks')
         NOTEBOOKS_SRC_SUBDIRS_TO_COPY = [
             'tutorials',
+            join('tutorials', 'imgs'),
             'assignments',
         ]
         NOTEBOOKS_SRC_SUBDIRS_TO_LOCK = [
@@ -69,11 +70,11 @@ class CustomSpawner(SystemdSpawner):
             if not isdir(usr_dir):
                 makedirs(usr_dir)
 
-            notebook_files = [
+            files_to_copy = [
                 f for f in listdir(src_dir)
-                if f.endswith('.ipynb')
+                if f.endswith(('.ipynb', '.png'))
             ]
-            for file_notebook in notebook_files:
+            for file_notebook in files_to_copy:
                 source_notebook = join(src_dir, file_notebook)
                 user_notebook = join(usr_dir, file_notebook)
                 if not isfile(user_notebook):
